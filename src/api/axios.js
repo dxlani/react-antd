@@ -1,13 +1,6 @@
-/**
- * http配置
- */
-
 import axios from 'axios'
-import store from '../vuex/modules/login'
-import { MessageBox,Message,  } from 'element-ui'
-import router from '../router'
 
-function buildHeader(): { [key: string]: string } {
+function buildHeader(){
     return {
         'Content-Type': 'application/json;charset=UTF-8;multipart/form-data'
     }
@@ -41,16 +34,13 @@ export let ax = axios.create({
     },
     // `onDownloadProgress`允许处理下载的进度事件
     onDownloadProgress: function (progressEvent) {
-        // Do whatever you want with the native progress event
     },
 })
 
-export function host(): string {
+export function host(){
     if (window.location.hostname == "localhost" || window.location.hostname.indexOf('192.168') > -1) {
-    //    return "/api/"                //代理
-      return "http://192.168.2.32:5000/api/"  //刘飞
-       //  return "http://192.168.2.107:5010/api/"  //相鹏
-        //   return "http://192.168.2.105:5005/api/"  //胡庆伟
+        return "/api/"                //代理
+    //  return "http://192.168.2.32:5000/api/"  //刘飞
     } else {
         return "/api/"
     }
@@ -74,7 +64,6 @@ ax.interceptors.response.use(
         if (!response.data.success) {
             switch(response.data.errorCode){
                 case '10001': //未登录
-                // router.push('/login');
                 break;
                 case '100004':
                 MessageBox.alert('请先注册账号！', '提示', {
@@ -84,7 +73,6 @@ ax.interceptors.response.use(
                         MessageBox.close();
                     }
                 });
-                // Message.warning('请先注册账号！')
                 break;
                 default:
                 return Promise.reject(response.data.errorMessage)
@@ -115,9 +103,7 @@ function handleError(err) {
 }
 
 /* GET  */
-export function Get<T>(url, data): Promise<any> {
-    // `params`是要与请求一起发送的URL参数
-    // 必须是纯对象或URLSearchParams对象
+export function Get(url, data){
     return ax
         .get(url, {
             params: data
@@ -133,14 +119,13 @@ export function Get<T>(url, data): Promise<any> {
                     MessageBox.close();
                 }
             });
-            // Message.warning(err)
             handleError(err)
             throw err
         })
 }
 
 //下载excel
-export function Download<T>(url, data) :Promise<any> {
+export function Download(url, data){
     return axios({
         baseURL:host(),
         url:url,
@@ -153,7 +138,7 @@ export function Download<T>(url, data) :Promise<any> {
 
 
 /* POST */
-export function Post<T>(url, data): Promise<any> {
+export function Post(url, data){
     return ax
         .post(url, data)
         .then(res => {
@@ -167,13 +152,12 @@ export function Post<T>(url, data): Promise<any> {
                     MessageBox.close();
                 }
             });
-            // Message.warning(err)
             handleError(err)
             throw err
         })
 }
 /* PUT */
-export function Put<T>(url, data): Promise<any> {
+export function Put(url, data){
     return ax
         .put(url, data)
         .then(res => {
@@ -187,13 +171,12 @@ export function Put<T>(url, data): Promise<any> {
                     MessageBox.close();
                 }
             });
-            // Message.warning(err)
             handleError(err)
             throw err
         })
 }
 /* PATCH */
-export function Patch<T>(url, data): Promise<any> {
+export function Patch(url, data){
     return ax
         .patch(url, data)
         .then(res => {
@@ -207,13 +190,12 @@ export function Patch<T>(url, data): Promise<any> {
                     MessageBox.close();
                 }
             });
-            // Message.warning(err)
             handleError(err)
             throw err
         })
 }
 /* DELETE */
-export function Delete<T>(url, data): Promise<any> {
+export function Delete(url, data){
     return ax
         .delete(url, data)
         .then(res => {
@@ -227,7 +209,6 @@ export function Delete<T>(url, data): Promise<any> {
                     MessageBox.close();
                 }
             });
-            // Message.warning(err)
             handleError(err)
             throw err
         })

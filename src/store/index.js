@@ -1,6 +1,6 @@
 import { createStore,combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import {API} from '@/api';
+import API from '@/api';
 import global from './reducer';
 const rootReducer = combineReducers({
   global

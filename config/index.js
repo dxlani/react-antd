@@ -11,7 +11,13 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api':'http://localhost:3000'
+      '/api': {
+        target: 'https://api.mlwei.com/music',  
+        changeOrigin: true,  
+        pathRewrite: {
+            '^/api': '/api'  
+        }
+      }
     },
 
     // Various Dev Server settings

@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import classnames from 'classnames';
 import { Toast } from 'antd-mobile';
 import * as actions from '@/store/actions';
-import { API } from '@/api';
+import API from '@/api';
 
 
 

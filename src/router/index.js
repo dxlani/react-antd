@@ -1,33 +1,20 @@
 import Loadable from 'react-loadable';
-import createBrowserHistory from 'history/createBrowserHistory';
-import MainLayout from '@/layouts/MainLayout';
-import Loading from '@/components/Loading';
+var createBrowserHistory=require("history").createBrowserHistory;
 
+import React from 'react';
 
-const Discovery = Loadable({loader: () => import('@/pages/Discovery'),loading: Loading});
-const MusicClub = Loadable({loader: () => import('@/pages/MusicClub'),loading: Loading});
-const MyCenter = Loadable({loader: () => import('@/pages/MyCenter'),loading: Loading});
+const login = Loadable({loader: () => import('@/pages/login'), loading: () => <div>loading</div>});
 
 export const history = createBrowserHistory();
 
 export const routes = [
   {
     path:'/',
-    redirect:'/myCenter'
+    redirect:'/login'
   },
   {
-    path:'/myCenter',
-    layout:MainLayout,
-    component:MyCenter
-  },
-  {
-    path:'/musicClub',
-    layout:MainLayout,
-    component:MusicClub
-  },
-  {
-    path:'/discovery',
-    layout:MainLayout,
-    component:Discovery
+    path:'/login',
+    layout:login,
+    component:login
   },
 ]

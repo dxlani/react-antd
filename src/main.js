@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import App from './App';
 import configureStore from '@/store';
 import '@babel/polyfill';
+
 const store = configureStore();
 render(
     <Provider store={store}>

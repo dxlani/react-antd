@@ -6,7 +6,7 @@ import { Carousel } from 'antd-mobile';
 import * as actions from '@/store/actions';
 import utils from '@/utils';
 import './style.scss';
-import { API } from '@/api';
+import  API from '@/api';
 @connect(
     (state)=>state.global,
     (dispatch)=>bindActionCreators(actions,dispatch)

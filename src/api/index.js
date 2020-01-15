@@ -1,27 +1,14 @@
-import {keys} from 'lodash'
-import http from '@/utils/http'
-import API_URL from './url';
+import { Post, Get, Patch, Put, Delete, ax } from './axios'
 
-function mapUrlObjToFuncObj(urlObj){
-  const API = {};
-  keys(urlObj).forEach((key)=>{
-    const item = urlObj[key]; 
-    API[key]=function(params){
-      return http[item.method](item.url,params,item.option);
-    }
-  });
-  return API;
+const API = {
+  getMusicUrl: function (obj) {
+    return Get("?key=523077333&cache=0&type=song", obj)
+  },
+  getMusicLyric(obj) {
+    return Get(`?key=523077333&cache=0&type=lrc`, obj)
+  },
+  queryMusic(obj) {
+    return Get(`?key=523077333&cache=0&type=lrc`, obj)
+  }
 }
-
-function mapUrlObjToStrObj(urlObj){
-  const Url = {};
-  keys(urlObj).forEach((key)=>{
-    const item = urlObj[key];
-    Url[key]=item.url;
-  });
-  return Url;
-}
-
-export const API = mapUrlObjToFuncObj(API_URL);
-export const URL = mapUrlObjToStrObj(API_URL);
-   
+export default API
