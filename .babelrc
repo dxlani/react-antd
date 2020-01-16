@@ -22,6 +22,7 @@
     "@babel/plugin-syntax-import-meta",
     ["@babel/plugin-proposal-class-properties", { "loose": false }],
     "@babel/plugin-proposal-json-strings",
-    ["import", { "libraryName": "antd-mobile" ,"style": true}]
+    // ["import", { "libraryName": "antd-mobile" ,"style": true}]
+    ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": true }] // `style: true` 会加载 less 文件
   ]
 }
