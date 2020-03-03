@@ -1,18 +1,23 @@
 import React, { Component, Fragment } from 'react';
 import './style.scss';
 import auditionImg from '@/assets/icon-user-audition.png';
-import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
-
-class login extends Component {
+import { Form, Mentions, Icon, Input, Button, Checkbox, message } from 'antd';
+// const { Option, getMentions } = Mentions;
+class login extends React.Component {
     constructor(props) {
         super(props);
+
     }
 
     componentWillMount() {
 
     }
     componentDidMount() {
-
+        const { form } = this.props;
+        form.setFieldsValue({
+            username: "dxl",
+        });
+        form.validateFields();
     }
     handleSubmit = e => {
         e.preventDefault();
@@ -25,15 +30,32 @@ class login extends Component {
             }
         })
     };
+    resetForm() {
+        this.props.form.resetFields();
+    }
+    checkMention = (rule, value, callback) => {
+        if (value.length > 6) {
+            callback(new Error('密码最多6位密码'));
+        } else {
+            return callback();
+        }
+
+
+    };
+    hasErrors(fieldsError) {
+        return Object.keys(fieldsError).some(field => fieldsError[field])
+    }
 
     render() {
-        const { getFieldDecorator } = this.props.form;
+        const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        const usernameError = isFieldTouched('username') && getFieldError('username');
+        const passwordError = isFieldTouched('password') && getFieldError('password');
         return (
             <Fragment>
-                <Form className="login-form">
-                    <Form.Item>
+                <Form className="login-form" >
+                    <Form.Item validateStatus={usernameError ? 'error' : ''} help={usernameError || ''}>
                         {getFieldDecorator('username', {
-                            rules: [{ required: true, message: '请输入用户名' }],
+                            rules: [{ required: true, message: '用户名必填' }],
                         })(
                             <Input
                                 prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -41,9 +63,15 @@ class login extends Component {
                             />,
                         )}
                     </Form.Item>
-                    <Form.Item>
+                    <Form.Item validateStatus={passwordError ? 'error' : ''} help={passwordError || ''}>
                         {getFieldDecorator('password', {
-                            rules: [{ required: true, message: '请输入密码' }],
+                            initialValue: "123",
+                            rules: [{
+                                required: true, message: '密码不能为空',
+                            },
+                            { min: 4, message: '密码至少4位', },
+                            { validator: this.checkMention }
+                            ],
                         })(
                             <Input
                                 prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -55,10 +83,14 @@ class login extends Component {
                     <Form.Item>
                         {getFieldDecorator('remember', {
                             valuePropName: 'checked',
-                            initialValue: true,
+                            initialValue: false,
                         })(<Checkbox>Remember me</Checkbox>)}
-                        <Button type="primary" className="login-form-button" onClick={this.handleSubmit}>
+                        <Button type="primary" className="login-form-button" disabled={this.hasErrors(getFieldsError())} onClick={this.handleSubmit} >
+                            {/* <Button type="primary" className="login-form-button" disabled={this.hasErrors(getFieldsError())} htmlType="submit" > */}
                             登录
+                        </Button>
+                        <Button type="primary" className="login-form-button" onClick={this.resetForm} >
+                            重置
                         </Button>
                     </Form.Item>
                 </Form>
