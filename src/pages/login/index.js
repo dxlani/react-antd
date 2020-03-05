@@ -2,13 +2,23 @@ import React, { Component, Fragment } from 'react';
 import './style.scss';
 import auditionImg from '@/assets/icon-user-audition.png';
 import { Form, Mentions, Icon, Input, Button, Checkbox, message } from 'antd';
-// const { Option, getMentions } = Mentions;
+import { connect } from 'react-redux'
+
+@connect(
+    // state=>state.session,
+    // actions
+)
 class login extends React.Component {
     constructor(props) {
         super(props);
-
+        // this.resetForm=this.resetForm.bind(this);
+        // <button onClick={(e) => this.resetForm(e)}></button> 也可以绑定this
     }
-
+    state = {
+        username: "dxl",
+        password: "",
+        remember: false
+    }
     componentWillMount() {
 
     }
@@ -16,7 +26,11 @@ class login extends React.Component {
         const { form } = this.props;
         form.setFieldsValue({
             username: "dxl",
+            password: "123",
         });
+        // this.setState({
+        //     username: "dxl1",
+        // });
         form.validateFields();
     }
     handleSubmit = e => {
@@ -48,6 +62,7 @@ class login extends React.Component {
 
     render() {
         const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        const { username } = this.state;
         const usernameError = isFieldTouched('username') && getFieldError('username');
         const passwordError = isFieldTouched('password') && getFieldError('password');
         return (
@@ -65,7 +80,6 @@ class login extends React.Component {
                     </Form.Item>
                     <Form.Item validateStatus={passwordError ? 'error' : ''} help={passwordError || ''}>
                         {getFieldDecorator('password', {
-                            initialValue: "123",
                             rules: [{
                                 required: true, message: '密码不能为空',
                             },
@@ -89,11 +103,12 @@ class login extends React.Component {
                             {/* <Button type="primary" className="login-form-button" disabled={this.hasErrors(getFieldsError())} htmlType="submit" > */}
                             登录
                         </Button>
-                        <Button type="primary" className="login-form-button" onClick={this.resetForm} >
+                        <Button type="primary" className="login-form-button" onClick={this.resetForm.bind(this)} >
                             重置
                         </Button>
                     </Form.Item>
                 </Form>
+                    <div>{username}</div>
             </Fragment>
         )
     }
