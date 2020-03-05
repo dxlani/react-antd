@@ -45,7 +45,12 @@ class login extends React.Component {
         })
     };
     resetForm() {
-        this.props.form.resetFields();
+        const { form } = this.props;
+        form.setFieldsValue({
+            username: "",
+            password: "",
+        });
+        form.validateFields();
     }
     checkMention = (rule, value, callback) => {
         if (value.length > 6) {
