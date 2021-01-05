@@ -67,7 +67,7 @@
     },
     "dependencies": {
         "antd-mobile": "^2.2.9",
-        "axios": "^0.16.2",
+        "axios": "^0.21.1",
         "babel-plugin-import": "^1.13.0",
         "lodash": "^4.17.11",
         "qs": "^6.6.0",
